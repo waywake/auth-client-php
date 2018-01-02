@@ -1,0 +1,18 @@
+{
+    "name": "pd_arch/pd_auth",
+    "authors": [
+        {
+            "name": "候学杰",
+            "email": "houxuejie@xpai.tv"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PdAuth\\": "src/PdAuth"
+        }
+    },
+    "require": {
+        "illuminate/support": "^5.5",
+        "guzzlehttp/guzzle": "^6.3"
+    }
+}
