@@ -2,7 +2,7 @@
 
 namespace PdAuth;
 
-class Client
+class OAuth
 {
 
     protected $host;
@@ -27,17 +27,36 @@ class Client
         return $this->host . "/connect?appid={$this->id}&redirect=$redirect";
     }
 
+    public function getAccessToken($code)
+    {
+        $resp = $this->get("$this->host/api/access_token?id={$this->id}&secret={$this->secret}&code={$code}");
+        if ($resp['code'] == 0) {
+            return $resp['data'];
+        }
+        return null;
+    }
+
     /**
      * 根据用户token获取用户信息
      * @param $username
      * @param $token
      * @return array|null
      */
-    public function getUserInfo($username, $token)
+    public function getUserInfo($token)
     {
         $token = urlencode($token);
-        $resp = $this->get("$this->host/api/{$username}/info?access_token=$token");
-        if( $resp['code'] == 0 ){
+        $resp = $this->get("$this->host/api/user_info?access_token=$token");
+        if ($resp['code'] == 0) {
+            return $resp['data'];
+        }
+        return null;
+    }
+
+    public function getGroups($token)
+    {
+        $token = urlencode($token);
+        $resp = $this->get("$this->host/api/{$this->id}/groups?access_token=$token");
+        if ($resp['code'] == 0) {
             return $resp['data'];
         }
         return null;
