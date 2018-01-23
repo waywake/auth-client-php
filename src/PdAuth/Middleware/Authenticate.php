@@ -72,7 +72,7 @@ class Authenticate
         $user = $request->user();
         $match = [];
         foreach ($user['roles'] as $role) {
-            if (array_key_exists($role['role']['role'], $privileges)) {
+            if (array_key_exists($role['role']['key'], $privileges)) {
                 $match += $privileges[$role['role']['key']];
             }
         }
