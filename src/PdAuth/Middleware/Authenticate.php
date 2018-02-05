@@ -80,7 +80,7 @@ class Authenticate
         $match = [];
         foreach ($user['roles'] as $role) {
             if (array_key_exists($role, $privileges)) {
-                $match += $privileges[$role];
+                $match  = array_merge($match,$privileges[$role]);
             }
         }
 
