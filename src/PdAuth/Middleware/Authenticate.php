@@ -63,6 +63,13 @@ class Authenticate
 
         //登录状态检测
         if ($this->auth->guard($guard)->guest()) {
+            if ($request->isXmlHttpRequest()) {
+                return response()->json([
+                    'code' => 401,
+                    'msg' => 'need login',
+                    'data' => null,
+                ]);
+            }
             return redirect(app('pd.auth')->connect($request->getUri()));
         }
 
@@ -76,12 +83,19 @@ class Authenticate
                 $match += $privileges[$role];
             }
         }
-        
+
         if (in_array($path, $match)) {
             return $next($request);
         }
 
-        abort(403, '无权访问，请联系管理员授权');
+        if ($request->isXmlHttpRequest()) {
+            return response()->json([
+                'code' => 403,
+                'msg' => '无权访问，请联系管理员授权',
+                'data' => null,
+            ]);
+        }
+        api_abort(403, '无权访问，请联系管理员授权');
         return $next($request);
     }
 }
