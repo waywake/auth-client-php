@@ -80,7 +80,14 @@ class Authenticate
         $match = [];
         foreach ($user['roles'] as $role) {
             if (array_key_exists($role, $privileges)) {
-                $match  = array_merge($match,$privileges[$role]);
+                //如果设置了 * ,则跳过权限检测
+                if (is_string($privileges[$role]) && $privileges[$role] == '*') {
+                    return $next($request);
+                }
+                if (!is_array($privileges[$role])) {
+                    throw new \Exception('pdauth 配置错误！');
+                }
+                $match = array_merge($match, $privileges[$role]);
             }
         }
 
