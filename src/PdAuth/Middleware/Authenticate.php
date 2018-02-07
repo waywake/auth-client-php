@@ -91,18 +91,19 @@ class Authenticate
 //            }
 //        }
 
-        if (in_array($path, $match)) {
-            return $next($request);
-        }
+//        if (in_array($path, $match)) {
+//            return $next($request);
+//        }
 
-        if ($request->isXmlHttpRequest()) {
-            return response()->json([
-                'code' => 403,
-                'msg' => '无权访问，请联系管理员授权',
-                'data' => null,
-            ]);
-        }
-        api_abort(403, '无权访问，请联系管理员授权');
+//        if ($request->isXmlHttpRequest()) {
+//            return response()->json([
+//                'code' => 403,
+//                'msg' => '无权访问，请联系管理员授权',
+//                'data' => null,
+//            ]);
+//        }
+//        api_abort(403, '无权访问，请联系管理员授权');
+        
         return $next($request);
     }
 }
