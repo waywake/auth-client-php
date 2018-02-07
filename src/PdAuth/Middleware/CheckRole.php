@@ -1,0 +1,30 @@
+<?php
+
+namespace PdAuth\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+
+class CheckRole
+{
+
+    public function handle(Request $request, Closure $next)
+    {
+        $uses = $request->route()[1]['uses'];
+        list($controller, $action) = explode('@', $uses);
+        $roles = $controller::Privileges;
+
+        if (empty($roles) || empty($roles[$action])) {
+            api_abort(403, '未定义权限');
+        }
+
+        $user = $request->user();
+
+        if (!$user->hasRoles($roles[$action])) {
+            api_abort(403, '无权访问');
+        }
+
+        return $next($request);
+    }
+
+}
