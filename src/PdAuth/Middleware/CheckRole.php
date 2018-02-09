@@ -15,13 +15,12 @@ class CheckRole
         $roles = $controller::Privileges;
 
         if (empty($roles) || empty($roles[$action])) {
-            api_abort(403, '未定义权限');
+            abort(403, '未定义权限');
         }
 
         $user = $request->user();
-
-        if (!$user->hasRoles($roles[$action])) {
-            api_abort(403, '无权访问');
+        if (empty(array_intersect($roles[$action],$user['roles']))) {
+            abort(403, '无权访问');
         }
 
         return $next($request);
