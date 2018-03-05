@@ -19,8 +19,13 @@ class CheckRole
         }
 
         $user = $request->user();
-        if (empty(array_intersect($roles[$action],$user['roles']))) {
+
+        if( empty($user) || empty($user['roles']) ){
             abort(403, '无权访问');
+        }
+
+        if (empty(array_intersect($roles[$action],$user['roles']))) {
+            abort(403, '无权访问，请联系管理员授权');
         }
 
         return $next($request);
