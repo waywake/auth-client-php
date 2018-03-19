@@ -36,3 +36,10 @@ $app->register(PdAuth\PdAuthServiceProvider::class);
 
 ### 配置
 
+在项目 .env 文件中增加如下配置
+
+```
+PDAUTH_APP_ID=appid
+PDAUTH_SECRET=123456
+PDAUTH_HOST=http://auth.dev.haowumc.com
+```

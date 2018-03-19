@@ -42,7 +42,7 @@ class PdAuthServiceProvider extends ServiceProvider
 
     protected function setupConfig()
     {
-        $source = realpath(__DIR__ . '/../config.php');
+        $source = realpath(__DIR__ . '/../config/pdauth.php');
 
         if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
             $this->publishes([$source => config_path('pdauth.php')], 'pdauth');
@@ -55,8 +55,8 @@ class PdAuthServiceProvider extends ServiceProvider
 
     public function register()
     {
+        $this->setupConfig();
         $this->app->singleton('pd.auth', function () {
-            $this->app->configure('pdauth');
             return new OAuth(config('pdauth'));
         });
     }
