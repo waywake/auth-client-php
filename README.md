@@ -20,7 +20,7 @@ $app->routeMiddleware([
     'auth' => PdAuth\Middleware\Authenticate::class,
 ]);
 ```
-注册
+注册服务
 ```PHP
 $app->register(PdAuth\PdAuthServiceProvider::class);
 ```
