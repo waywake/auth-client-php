@@ -40,6 +40,19 @@ class PdAuthServiceProvider extends ServiceProvider
         });
     }
 
+    protected function setupConfig()
+    {
+        $source = realpath(__DIR__ . '/../config.php');
+
+        if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
+            $this->publishes([$source => config_path('pdauth.php')], 'pdauth');
+        } elseif ($this->app instanceof LumenApplication) {
+            $this->app->configure('pdauth');
+        }
+
+        $this->mergeConfigFrom($source, 'pdauth');
+    }
+
     public function register()
     {
         $this->app->singleton('pd.auth', function () {
