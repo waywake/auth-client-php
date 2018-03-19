@@ -14,14 +14,17 @@ composer require arch/php-auth-client
 
 ### 代码中启用
 
-注册中间件
-```PHP
+* 注册中间件
+
+```php
 $app->routeMiddleware([
     'auth' => PdAuth\Middleware\Authenticate::class,
 ]);
 ```
-注册服务
-```PHP
+
+* 注册服务
+
+```php
 $app->register(PdAuth\PdAuthServiceProvider::class);
 ```
 
