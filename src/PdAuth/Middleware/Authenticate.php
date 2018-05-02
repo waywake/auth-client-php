@@ -37,7 +37,7 @@ class Authenticate
      * @param  string|null $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = 'auth')
+    public function handle($request, Closure $next, $guard = null)
     {
         //oauth 回调
         $code = $request->input('pd_code');
@@ -55,22 +55,29 @@ class Authenticate
                     }
                     $qs .= $v . '&';
                 }
-                abort(302, '', [
-                    'Location' => $request->getSchemeAndHttpHost() . $request->getBaseUrl() . $request->getPathInfo() . $qs,
-                ]);
+
+                if (!$request->isXmlHttpRequest()) {
+                    abort(302, '', [
+                        'Location' => $request->getSchemeAndHttpHost() . $request->getBaseUrl() . $request->getPathInfo() . $qs,
+                    ]);
+                }
             }
         }
 
         //登录状态检测
         if ($this->auth->guard($guard)->guest()) {
+            $redirect = $request->input('redirect', $request->getUri());
             if ($request->isXmlHttpRequest()) {
                 return response()->json([
                     'code' => 401,
                     'msg' => 'need login',
-                    'data' => null,
+                    'data' => [
+                        'url' => app('pd.auth')->connect($redirect),
+                    ],
                 ]);
+            } else {
+                return redirect(app('pd.auth')->connect($redirect));
             }
-            return redirect(app('pd.auth')->connect($request->getUri()));
         }
 
         //权限检测
@@ -103,7 +110,7 @@ class Authenticate
 //            ]);
 //        }
 //        api_abort(403, '无权访问，请联系管理员授权');
-        
+
         return $next($request);
     }
 }
