@@ -22,7 +22,7 @@ class PdAuthServiceProvider extends ServiceProvider
         // should return either a User instance or null. You're free to obtain
         // the User instance via an API token or any other method necessary.
 
-        $this->app['auth']->viaRequest('api', function (Request $request) {
+        $this->app['auth']->viaRequest('auth', function (Request $request) {
 
             $token = $request->cookie(Authenticate::CookieName);
 
@@ -38,6 +38,13 @@ class PdAuthServiceProvider extends ServiceProvider
             }
             return null;
         });
+//
+        $config = $this->app['config']['auth'];
+
+        if (!isset($config['guards']['auth'])) {
+            config(['auth.guards.auth' => ['driver' => 'auth']]);
+            config(['auth.defaults.guard' => 'auth']);
+        }
     }
 
     protected function setupConfig()

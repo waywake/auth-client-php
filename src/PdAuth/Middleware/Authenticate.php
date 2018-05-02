@@ -37,7 +37,7 @@ class Authenticate
      * @param  string|null $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next, $guard = 'auth')
     {
         //oauth 回调
         $code = $request->input('pd_code');
