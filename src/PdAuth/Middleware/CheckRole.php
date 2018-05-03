@@ -18,14 +18,14 @@ class CheckRole
             abort(403, '未定义权限');
         }
 
+        if (is_string($roles[$action]) && $roles[$action] == '*') {
+            return $next($request);
+        }
+
         $user = $request->user();
 
         if (empty($user) || empty($user['roles'])) {
             abort(403, '无权访问');
-        }
-
-        if (is_string($roles[$action]) && $roles[$action] == '*') {
-            return $next($request);
         }
 
         if (empty(array_intersect($roles[$action], $user['roles']))) {
