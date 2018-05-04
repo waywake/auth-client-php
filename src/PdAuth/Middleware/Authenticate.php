@@ -44,7 +44,7 @@ class Authenticate
         if ($code) {
             $token = app('pd.auth')->getAccessToken($code);
             if (isset($token['access_token'])) {
-                setcookie(self::CookieName, $token['access_token'], strtotime($token['expired_at']));
+                setcookie(self::CookieName, $token['access_token'], strtotime($token['expired_at']), '/');
 
                 $qs = $request->getQueryString();
                 $params = explode('&', $qs);
