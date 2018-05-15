@@ -2,6 +2,8 @@
 
 namespace PdAuth;
 
+use PdAuth\Middleware\Authenticate;
+
 class OAuth
 {
 
@@ -38,24 +40,31 @@ class OAuth
 
     /**
      * 根据用户token获取用户信息
-     * @param $username
      * @param $token
-     * @return array|null
+     * @return null
      */
     public function getUserInfo($token)
     {
         $token = urlencode($token);
-        $resp = $this->get("$this->host/api/user_info?access_token=$token");
+        $resp = $this->get("$this->host/api/user/info?access_token=$token");
         if ($resp['code'] == 0) {
             return $resp['data'];
         }
         return null;
     }
 
-    public function getGroups($token)
+    /**
+     * 获取用户组
+     * @param null $token
+     * @return null
+     */
+    public function getGroupUsers($token = null)
     {
+        if ($token == null) {
+            $token = $_COOKIE[Authenticate::CookieName];
+        }
         $token = urlencode($token);
-        $resp = $this->get("$this->host/api/{$this->id}/groups?access_token=$token");
+        $resp = $this->get("$this->host/api/group/users?access_token=$token");
         if ($resp['code'] == 0) {
             return $resp['data'];
         }
