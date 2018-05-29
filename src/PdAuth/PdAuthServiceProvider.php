@@ -24,7 +24,7 @@ class PdAuthServiceProvider extends ServiceProvider
 
         $this->app['auth']->viaRequest('auth', function (Request $request) {
 
-            $token = $request->cookie(Authenticate::CookieName);
+            $token = $request->header('Authorization', $request->cookie(Authenticate::CookieName));
 
             if ($token) {
                 try {
