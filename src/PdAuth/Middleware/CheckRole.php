@@ -22,7 +22,7 @@ class CheckRole
             return $next($request);
         }
 
-        $user = $request->user();
+        $user = $request->user('auth');
 
         if (empty($user) || empty($user['roles'])) {
             abort(403, '无权访问');
