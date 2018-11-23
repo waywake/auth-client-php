@@ -27,6 +27,7 @@ class OAuth
         $this->host = $config['host'];
         $this->id = $config['appid'];
         $this->secret = $config['secret'];
+        return $this;
     }
 
     /**
