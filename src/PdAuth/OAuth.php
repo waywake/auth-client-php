@@ -19,10 +19,23 @@ class OAuth
     }
 
     /**
+     * 选择配置 应对同一项目引入多个pdauth
+     * @param $config
+     */
+    public function choose($config)
+    {
+        $this->host = $config['host'];
+        $this->id = $config['appid'];
+        $this->secret = $config['secret'];
+    }
+
+    /**
      * 生成授权的链接
      * @param $redirect
      * @return string
      */
+
+
     public function connect($redirect)
     {
         $redirect = urlencode($redirect);
