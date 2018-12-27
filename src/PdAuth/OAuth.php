@@ -85,6 +85,29 @@ class OAuth
         return null;
     }
 
+
+    /**
+     * @绑定好物平台用户
+     *
+     * @param int $user_id
+     * @param int $hwuser_id
+     * @return null
+     */
+    public function bindHwUser(int $user_id, int $hwuser_id)
+    {
+        if ($user_id <= 0 || $hwuser_id <= 0) {
+            return null;
+        }
+        $resp = $this->post("$this->host/api/bind/hwuser", [
+            'id' => $user_id,
+            'hwmc_id' => $hwuser_id,
+        ]);
+        if ($resp['code'] == 0) {
+            return $resp['data'];
+        }
+        return null;
+    }
+
     /**
      * 对 pd auth 系统发起请求
      * @param $url
@@ -102,4 +125,25 @@ class OAuth
         }
     }
 
+    /**
+     * 对 pd auth 系统发起post请求
+     *
+     * @param $url
+     * @param array $params
+     * @param array $headers
+     * @return null
+     */
+    protected function post($url, $params = [], $headers = [])
+    {
+        $client = new \GuzzleHttp\Client();
+        $res = $client->request('POST', $url, [
+            'headers' => $headers,
+            'form_params' => $params,
+        ]);
+        if ($res->getStatusCode() == 200) {
+            return \GuzzleHttp\json_decode($res->getBody(), true);
+        } else {
+            return null;
+        }
+    }
 }
