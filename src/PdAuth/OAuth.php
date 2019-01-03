@@ -102,10 +102,7 @@ class OAuth
             'id' => $user_id,
             'hwmc_id' => $hwuser_id,
         ]);
-        if ($resp['code'] == 0) {
-            return $resp['data'];
-        }
-        return null;
+        return $resp;
     }
 
     /**
