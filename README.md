@@ -7,8 +7,8 @@
 
 执行 
 ```bash
-composer config repositories.php-auth-client vcs git@git.int.haowumc.com:arch/php-auth-client.git
-composer require arch/php-auth-client
+composer config repositories.php-auth-client vcs git@git.int.haowumc.com:composer/php-auth-client.git
+composer require paidian/php-auth-client
 ```
 
 
