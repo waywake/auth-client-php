@@ -3,16 +3,22 @@
     "authors": [
         {
             "name": "候学杰",
-            "email": "houxuejie@xpai.tv"
+            "email": "houxuejie@hawumc.com.tv"
         }
     ],
     "autoload": {
         "psr-4": {
-            "PdAuth\\": "src/PdAuth"
+            "PdAuth\\": "src/"
         }
     },
     "require": {
         "illuminate/support": "^5.5",
-        "guzzlehttp/guzzle": "^6.3"
+        "paidian/json-rpc": "dev-master"
+    },
+    "repositories": {
+        "php-json-rpc": {
+            "type": "vcs",
+            "url": "git@git.int.haowumc.com:composer/php-json-rpc.git"
+        }
     }
 }

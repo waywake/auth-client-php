@@ -35,8 +35,6 @@ class OAuth
      * @param $redirect
      * @return string
      */
-
-
     public function connect($redirect)
     {
         $redirect = urlencode($redirect);
