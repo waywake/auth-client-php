@@ -56,14 +56,17 @@ class Auth
         }
     }
 
-    /**
-     * 指定 app
-     * @param $key
-     */
-    public function choose($key)
+    public function choose($id, $referer = null)
     {
-        $this->id = $this->config['apps'][$key]['id'];
-        $this->secret = $this->config['apps'][$key]['secret'];
+        foreach ($this->config['apps'] as $app) {
+            if (!$id && $referer != null) {
+                $arr = parse_url($referer);
+            } elseif ($id && $app['id'] == $id) {
+                $this->id = $app['id'];
+                $this->secret = $app['secret'];
+            }
+        }
+        return $this;
     }
 
     /**
@@ -97,7 +100,7 @@ class Auth
      */
     public function getUserInfo($token)
     {
-        $info = $this->rpc->call('user.info',[$token]);
+        $info = $this->rpc->call('user.info', [$token]);
         return $info;
     }
 

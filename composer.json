@@ -1,9 +1,9 @@
 {
-    "name": "paidian/php-auth-client",
+    "name": "paidian/auth-client",
     "authors": [
         {
             "name": "候学杰",
-            "email": "houxuejie@hawumc.com.tv"
+            "email": "houxuejie@hawumc.com"
         }
     ],
     "autoload": {

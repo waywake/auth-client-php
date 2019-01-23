@@ -21,7 +21,6 @@ class PdAuthServiceProvider extends ServiceProvider
         // application. The callback which receives the incoming request instance
         // should return either a User instance or null. You're free to obtain
         // the User instance via an API token or any other method necessary.
-
         $this->app['auth']->viaRequest('auth', function (Request $request) {
 
             $token = $request->header('Authorization', $request->cookie(Authenticate::CookieName));
@@ -39,18 +38,33 @@ class PdAuthServiceProvider extends ServiceProvider
             return null;
         });
 
-//
         $config = $this->app['config']['auth'];
 
         if (!isset($config['guards']['auth'])) {
             config(['auth.guards.auth' => ['driver' => 'auth']]);
             $this->app['auth']->shouldUse('auth');
         }
+
+        //添加获取token的路由
+        $this->app['router']->get('auth/token.json', function (Request $request) {
+            $code = $request->input('pd_code');
+            $id = $request->input('app_id');
+            $token = app('pd.auth')->choose($id)->getAccessToken($code);
+            return response()->json([
+                'code' => 0,
+                'message' => '',
+                'data' => $token,
+            ]);
+        });
+
+        $this->app['router']->get('auth/logout', function (Request $request) {
+            app('pd.auth')->logout();
+        });
     }
 
     protected function setupConfig()
     {
-        $source = realpath(__DIR__ . '/../config/pdauth.php');
+        $source = realpath(__DIR__ . '/../../config/auth.php');
 
         if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
             $this->publishes([$source => config_path('pdauth.php')], 'pdauth');
@@ -65,7 +79,7 @@ class PdAuthServiceProvider extends ServiceProvider
     {
         $this->setupConfig();
         $this->app->singleton('pd.auth', function () {
-            return new OAuth(config('pdauth'));
+            return new Auth(config('pdauth'));
         });
     }
 
