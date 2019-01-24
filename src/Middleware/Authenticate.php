@@ -39,77 +39,23 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        //oauth 回调
-        $code = $request->input('pd_code');
-        if ($code) {
-            $token = app('pd.auth')->getAccessToken($code);
-            if (isset($token['access_token'])) {
-                setcookie(self::CookieName, $token['access_token'], strtotime($token['expired_at']), '/');
-
-                $qs = $request->getQueryString();
-                $params = explode('&', $qs);
-                $qs = '?';
-                foreach ($params as $k => $v) {
-                    if (Str::startsWith($v, 'pd_code=')) {
-                        continue;
-                    }
-                    $qs .= $v . '&';
-                }
-
-                if (!$request->isXmlHttpRequest()) {
-                    abort(302, '', [
-                        'Location' => $request->getSchemeAndHttpHost() . $request->getBaseUrl() . $request->getPathInfo() . $qs,
-                    ]);
-                }
-            }
-        }
-
         //登录状态检测
         if ($this->auth->guard($guard)->guest()) {
             $redirect = $request->input('redirect', $request->getUri());
-            if ($request->isXmlHttpRequest()) {
+//            if ($request->isXmlHttpRequest()) {
                 return response()->json([
-                    'code' => 401,
-                    'msg' => 'need login',
+                    'code' => config('pdauth.code.unauthorized', 401),
+                    'msg' => 'Unauthorized',
                     'data' => [
                         'url' => app('pd.auth')->connect($redirect),
                     ],
                 ]);
-            } else {
-                return redirect(app('pd.auth')->connect($redirect));
-            }
-        }
-
-        //权限检测
-//        $path = $request->path();
-//        $privileges = config('pdauth.roles_privileges');
-//        $user = $request->user();
-//        $match = [];
-//        foreach ($user['roles'] as $role) {
-//            if (array_key_exists($role, $privileges)) {
-//                //如果设置了 * ,则跳过权限检测
-//                if (is_string($privileges[$role]) && $privileges[$role] == '*') {
-//                    return $next($request);
-//                }
-//                if (!is_array($privileges[$role])) {
-//                    throw new \Exception('pdauth 配置错误！');
-//                }
-//                $match = array_merge($match, $privileges[$role]);
+//            } else {
+//                //
+//                exit('jump');
+////                return redirect(app('pd.auth')->connect($redirect));
 //            }
-//        }
-
-//        if (in_array($path, $match)) {
-//            return $next($request);
-//        }
-
-//        if ($request->isXmlHttpRequest()) {
-//            return response()->json([
-//                'code' => 403,
-//                'msg' => '无权访问，请联系管理员授权',
-//                'data' => null,
-//            ]);
-//        }
-//        api_abort(403, '无权访问，请联系管理员授权');
+        }
 
         return $next($request);
     }

@@ -12,7 +12,6 @@ return [
     'apps' => [
         'erp' => [
             'id' => '100009',
-            'alias' => 'erp',
             'secret' => env('AUTH_ERP_SECRET','123456'),
         ],
     ],

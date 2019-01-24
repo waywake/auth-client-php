@@ -54,17 +54,20 @@ class Auth
                 ],
             ]);
         }
+        $this->choose();
     }
 
-    public function choose($id, $referer = null)
+    public function choose($name = null)
     {
-        foreach ($this->config['apps'] as $app) {
-            if (!$id && $referer != null) {
-                $arr = parse_url($referer);
-            } elseif ($id && $app['id'] == $id) {
-                $this->id = $app['id'];
-                $this->secret = $app['secret'];
-            }
+        if (!$name) {
+            $name = env('APP_NAME');
+        }
+        switch ($name) {
+            case 'erp':
+            case 'erp_api':
+                $this->id = $this->config['apps']['erp']['id'];
+                $this->secret = $this->config['apps']['erp']['secret'];
+                break;
         }
         return $this;
     }
@@ -88,7 +91,7 @@ class Auth
      */
     public function getAccessToken($code)
     {
-        $token = $this->rpc->call('oauth.get_access_token', [$this->id, $this->secret, $code]);
+        $token = $this->rpc->call('oauth.access_token', [$this->id, $this->secret, $code]);
         return $token;
     }
 
@@ -100,7 +103,7 @@ class Auth
      */
     public function getUserInfo($token)
     {
-        $info = $this->rpc->call('user.info', [$token]);
+        $info = $this->rpc->call('oauth.user_info', [$this->id, $this->secret, $token]);
         return $info;
     }
 
