@@ -51,9 +51,7 @@ class Authenticate
                     ],
                 ]);
 //            } else {
-//                //
-//                exit('jump');
-////                return redirect(app('pd.auth')->connect($redirect));
+//                return redirect(app('pd.auth')->connect($redirect));
 //            }
         }
 
