@@ -32,7 +32,7 @@ class Auth
         switch (env('APP_ENV')) {
             case 'local':
             case 'develop':
-                $this->host = 'http://auth.lo.haowumc.com';
+                $this->host = 'http://auth.dev.haowumc.com';
                 break;
             case 'production':
                 $this->host = 'https://auth.int.haowumc.com';
