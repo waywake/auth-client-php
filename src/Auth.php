@@ -64,7 +64,22 @@ class Auth
         }
         switch ($name) {
             case 'erp':
-            case 'erp_api':
+            case 'erp-api':
+                $this->id = $this->config['apps']['erp']['id'];
+                $this->secret = $this->config['apps']['erp']['secret'];
+                break;
+            case 'ds':
+            case 'ds-api':
+                $this->id = $this->config['apps']['erp']['id'];
+                $this->secret = $this->config['apps']['erp']['secret'];
+                break;
+            case 'crm':
+            case 'crm-api':
+                $this->id = $this->config['apps']['erp']['id'];
+                $this->secret = $this->config['apps']['erp']['secret'];
+                break;
+            case 'op':
+            case 'op-api':
                 $this->id = $this->config['apps']['erp']['id'];
                 $this->secret = $this->config['apps']['erp']['secret'];
                 break;

@@ -10,6 +10,10 @@ return [
      * 支持的应用配置
      */
     'apps' => [
+        'op' => [
+            'id' => '100006',
+            'secret' => env('AUTH_OP_SECRET','123456'),
+        ],
         'erp' => [
             'id' => '100009',
             'secret' => env('AUTH_ERP_SECRET','123456'),

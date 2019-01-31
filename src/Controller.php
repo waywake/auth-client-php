@@ -16,6 +16,7 @@ trait Controller
     {
         $this->guard = $guard;
         app('auth')->shouldUse($guard);
+        app('pd.auth')->choose($guard);
         $this->middleware(Authenticate::class);
         $this->middleware(CheckRole::class);
 

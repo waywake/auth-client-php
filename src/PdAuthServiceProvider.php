@@ -26,18 +26,9 @@ class PdAuthServiceProvider extends ServiceProvider
 
         foreach ($this->app['config']['pdauth']['apps'] as $key => $app) {
             $this->app['auth']->viaRequest($key, function (Request $request) use ($key) {
-
                 $token = $request->header('Authorization', $request->cookie(Authenticate::CookieName));
-
                 if ($token) {
-                    try {
-                        $user = app('pd.auth')->choose($key)->getUserInfo($token);
-                        if ($user) {
-                            return $user;
-                        }
-                    } catch (DecryptException $ex) {
-                        return null;
-                    }
+                    return app('pd.auth')->choose($key)->getUserInfo($token);
                 }
                 return null;
             });
@@ -71,7 +62,8 @@ class PdAuthServiceProvider extends ServiceProvider
         $this->mergeConfigFrom($source, 'pdauth');
     }
 
-    protected function setupRouter(){
+    protected function setupRouter()
+    {
         //添加获取token的路由
         $this->app['router']->get('auth/token.json', function (Request $request) {
             $code = $request->input('pd_code');
