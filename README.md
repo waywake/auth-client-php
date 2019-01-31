@@ -14,26 +14,8 @@ composer require paidian/php-auth-client
 
 ### 代码中启用
 
-* 注册中间件
-
-```php
-$app->routeMiddleware([
-    'auth' => PdAuth\Middleware\Authenticate::class,
-]);
-```
-
 * 注册服务
 
 ```php
 $app->register(PdAuth\PdAuthServiceProvider::class);
-```
-
-### 配置
-
-在项目 .env 文件中增加如下配置
-
-```
-PDAUTH_APP_ID=appid
-PDAUTH_SECRET=123456
-PDAUTH_HOST=http://auth.dev.haowumc.com
 ```
