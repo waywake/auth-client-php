@@ -67,7 +67,8 @@ class PdAuthServiceProvider extends ServiceProvider
         //添加获取token的路由
         $this->app['router']->get('auth/token.json', function (Request $request) {
             $code = $request->input('pd_code');
-            $token = app('pd.auth')->getAccessToken($code);
+            $id = $request->input('app_id');
+            $token = app('pd.auth')->choose(null, $id)->getAccessToken($code);
             $cookie = new Cookie(Authenticate::CookieName, $token['access_token'], strtotime($token['expired_at']));
             return response()->json([
                 'code' => 0,

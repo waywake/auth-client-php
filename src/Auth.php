@@ -54,11 +54,25 @@ class Auth
                 ],
             ]);
         }
-        $this->choose();
     }
 
-    public function choose($name = null)
+    protected function matchConfigById($id)
     {
+        foreach ($this->config['apps'] as $name => $app) {
+            if ($app['id'] == $id) {
+                return $name;
+            }
+        }
+        return null;
+    }
+
+    public function choose($name = null, $id = null)
+    {
+        if ($id) {
+            $name = $this->matchConfigByid($id);
+            $this->choose($name);
+        }
+
         if (!$name) {
             $name = env('APP_NAME');
         }
