@@ -41,7 +41,7 @@ class Authenticate
     {
         //登录状态检测
         if ($this->auth->guard($guard)->guest()) {
-            $redirect = $request->input('redirect', $request->getUri());
+            $redirect = $request->input('redirect', $request->header('referer'));
 //            if ($request->isXmlHttpRequest()) {
                 return response()->json([
                     'code' => config('pdauth.code.unauthorized', 401),
