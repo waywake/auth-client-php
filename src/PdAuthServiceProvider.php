@@ -33,18 +33,10 @@ class PdAuthServiceProvider extends ServiceProvider
                 return null;
             });
 
-            if (!isset($config['guards']['auth'])) {
+            if (!isset($config['guards'][$key])) {
                 config(['auth.guards.' . $key => ['driver' => $key]]);
-                $this->app['auth']->shouldUse('auth');
             }
         }
-
-//        $config = $this->app['config']['auth'];
-//
-//        if (!isset($config['guards']['auth'])) {
-//            config(['auth.guards.auth' => ['driver' => 'auth']]);
-//            $this->app['auth']->shouldUse('auth');
-//        }
 
         $this->setupRouter();
     }
