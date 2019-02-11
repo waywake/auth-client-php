@@ -49,7 +49,7 @@ class Authenticate
                     'data' => [
                         'url' => app('pd.auth')->connect($redirect),
                     ],
-                ]);
+                ],401);
 //            } else {
 //                return redirect(app('pd.auth')->connect($redirect));
 //            }
