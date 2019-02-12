@@ -13,7 +13,7 @@
     },
     "require": {
         "illuminate/support": "^5.5",
-        "paidian/json-rpc": "1.0"
+        "paidian/json-rpc": "~1.1"
     },
     "repositories": {
         "php-json-rpc": {
