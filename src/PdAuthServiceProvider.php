@@ -57,7 +57,7 @@ class PdAuthServiceProvider extends ServiceProvider
     protected function setupRouter()
     {
         //添加获取token的路由
-        $this->app['router']->get('auth/token.json', function (Request $request) {
+        $this->app['router']->get('api/auth/token.json', function (Request $request) {
             $code = $request->input('pd_code');
             $id = $request->input('app_id');
             $token = app('pd.auth')->choose(null, $id)->getAccessToken($code);
@@ -69,7 +69,7 @@ class PdAuthServiceProvider extends ServiceProvider
             ])->withCookie($cookie);
         });
 
-        $this->app['router']->get('auth/logout', function (Request $request) {
+        $this->app['router']->get('api/auth/logout', function (Request $request) {
             app('pd.auth')->logout();
         });
     }
