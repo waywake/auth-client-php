@@ -84,18 +84,18 @@ class Auth
                 break;
             case 'ds':
             case 'ds-api':
-                $this->id = $this->config['apps']['erp']['id'];
-                $this->secret = $this->config['apps']['erp']['secret'];
+                $this->id = $this->config['apps']['ds']['id'];
+                $this->secret = $this->config['apps']['ds']['secret'];
                 break;
             case 'crm':
             case 'crm-api':
-                $this->id = $this->config['apps']['erp']['id'];
-                $this->secret = $this->config['apps']['erp']['secret'];
+                $this->id = $this->config['apps']['crm']['id'];
+                $this->secret = $this->config['apps']['crm']['secret'];
                 break;
             case 'op':
             case 'op-api':
-                $this->id = $this->config['apps']['erp']['id'];
-                $this->secret = $this->config['apps']['erp']['secret'];
+                $this->id = $this->config['apps']['op']['id'];
+                $this->secret = $this->config['apps']['op']['secret'];
                 break;
         }
         return $this;
