@@ -26,5 +26,9 @@ return [
             'id' => '100011',
             'secret' => env('AUTH_DS_SECRET','123456'),
         ],
+        'payment' => [
+            'id' => '100007',
+            'secret' => env('AUTH_PAYMENT_SECRET','123456'),
+        ],
     ],
 ];
