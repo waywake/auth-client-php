@@ -97,11 +97,6 @@ class Auth
                 $this->id = $this->config['apps']['op']['id'];
                 $this->secret = $this->config['apps']['op']['secret'];
                 break;
-            case 'payment':
-            case 'paymeny_api':
-                $this->id = $this->config['apps']['payment']['id'];
-                $this->secret = $this->config['apps']['payment']['secret'];
-                break;
         }
         return $this;
     }
@@ -139,6 +134,16 @@ class Auth
     {
         $info = $this->rpc->call('oauth.user_info', [$this->id, $this->secret, $token]);
         return $info;
+    }
+
+    /**
+     * 退出登录
+     * @param $token
+     * @return array
+     * @throws \JsonRpc\Exception\RpcServerException
+     */
+    public function logout($token){
+        return $info = $this->rpc->call('oauth.logout', [$this->id, $this->secret, $token]);
     }
 
     /**

@@ -70,7 +70,15 @@ class PdAuthServiceProvider extends ServiceProvider
         });
 
         $this->app['router']->get('api/auth/logout', function (Request $request) {
-            app('pd.auth')->logout();
+            $token = $request->header('Authorization', $request->cookie(Authenticate::CookieName));
+            $cookie = new Cookie(Authenticate::CookieName, '', time());
+            app('pd.auth')->logout($token);
+            return response()->json([
+                'code' => 0,
+                'message' => '',
+                'data' => [],
+            ])->withCookie($cookie);
+
         });
     }
 
