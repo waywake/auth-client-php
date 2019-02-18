@@ -97,6 +97,11 @@ class Auth
                 $this->id = $this->config['apps']['op']['id'];
                 $this->secret = $this->config['apps']['op']['secret'];
                 break;
+            case 'payment':
+            case 'paymeny_api':
+                $this->id = $this->config['apps']['payment']['id'];
+                $this->secret = $this->config['apps']['payment']['secret'];
+                break;
         }
         return $this;
     }
