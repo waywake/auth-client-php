@@ -14,7 +14,7 @@
 2. 执行
  ```bash
  composer config repositories.php-auth-client vcs git@git.int.haowumc.com:composer/php-auth-client.git
- composer require paidian/php-auth-client
+ composer require paidian/auth-client
  ```
  
 ### 服务端代码使用
