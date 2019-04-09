@@ -102,6 +102,11 @@ class Auth
                 $this->id = $this->config['apps']['payment']['id'];
                 $this->secret = $this->config['apps']['payment']['secret'];
                 break;
+            case 'xiaoke':
+            case 'xiaoke_api':
+                $this->id = $this->config['apps']['xiaoke']['id'];
+                $this->secret = $this->config['apps']['xiaoke']['secret'];
+                break;
 
         }
         return $this;
