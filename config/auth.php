@@ -34,5 +34,9 @@ return [
             'id' => '100005',
             'secret' => env('AUTH_XIAOKE_SECRET','123456'),
         ],
+        'finance' => [
+             'id' => '100003',
+            'secret' => env('AUTH_FINANCE_SECRET','123456'),
+        ],
     ],
 ];
