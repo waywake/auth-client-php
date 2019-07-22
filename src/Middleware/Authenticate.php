@@ -42,7 +42,7 @@ class Authenticate
         //登录状态检测
         if ($this->auth->guard($guard)->guest()) {
             $redirect = $request->input('redirect', $request->header('referer'));
-//            if ($request->isXmlHttpRequest()) {
+            if ($request->isXmlHttpRequest()) {
                 return response()->json([
                     'code' => config('pdauth.code.unauthorized', 401),
                     'msg' => 'Unauthorized',
@@ -50,9 +50,9 @@ class Authenticate
                         'url' => app('pd.auth')->connect($redirect),
                     ],
                 ],401);
-//            } else {
-//                return redirect(app('pd.auth')->connect($redirect));
-//            }
+            } else {
+                return redirect(app('pd.auth')->connect($redirect));
+            }
         }
 
         return $next($request);
