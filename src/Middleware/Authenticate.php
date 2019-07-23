@@ -41,8 +41,11 @@ class Authenticate
     {
         //登录状态检测
         if ($this->auth->guard($guard)->guest()) {
-            $redirect = $request->input('redirect', $request->header('referer'));
+            $redirect = $request->input('redirect');
             if ($request->isXmlHttpRequest()) {
+                if( $redirect == null ){
+                    $redirect = $request->header('referer');
+                }
                 return response()->json([
                     'code' => config('pdauth.code.unauthorized', 401),
                     'msg' => 'Unauthorized',
@@ -51,6 +54,9 @@ class Authenticate
                     ],
                 ],401);
             } else {
+                if( $redirect == null ){
+                    $redirect = $request->getSchemeAndHttpHost()."/api/auth/token.html";
+                }
                 return redirect(app('pd.auth')->connect($redirect));
             }
         }
