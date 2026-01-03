@@ -10,8 +10,37 @@ class CheckRole
 
     public function handle(Request $request, Closure $next)
     {
-        $uses = $request->route()[1]['uses'];
-        list($controller, $action) = explode('@', $uses);
+        $route = $request->route();
+        $uses = null;
+
+        if (is_array($route)) {
+            $uses = $route[1]['uses'] ?? null;
+        } elseif (is_object($route)) {
+            if (method_exists($route, 'getActionName')) {
+                $uses = $route->getActionName();
+            } elseif (method_exists($route, 'getAction')) {
+                $action = $route->getAction();
+                $uses = $action['uses'] ?? null;
+            }
+        }
+
+        if (!is_string($uses) || $uses === '' || $uses === 'Closure') {
+            abort(403, '未定义权限');
+        }
+
+        if (str_contains($uses, '@')) {
+            [$controller, $action] = explode('@', $uses, 2);
+        } else {
+            $controller = $uses;
+            $action = '__invoke';
+        }
+
+        if (!class_exists($controller)
+            || (!defined($controller . '::Privileges') && !property_exists($controller, 'Privileges'))
+        ) {
+            abort(403, '未定义权限');
+        }
+
         $roles = $controller::Privileges;
 
         if (empty($roles) || empty($roles[$action])) {

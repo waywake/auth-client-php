@@ -2,7 +2,6 @@
 
 namespace PdAuth;
 
-use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
@@ -46,9 +45,14 @@ class PdAuthServiceProvider extends ServiceProvider
     {
         $source = realpath(__DIR__ . '/../config/auth.php');
 
-        if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
+        if (class_exists(\Illuminate\Foundation\Application::class)
+            && $this->app instanceof \Illuminate\Foundation\Application
+            && $this->app->runningInConsole()
+        ) {
             $this->publishes([$source => config_path('pdauth.php')], 'pdauth');
-        } elseif ($this->app instanceof LumenApplication) {
+        } elseif (class_exists(\Laravel\Lumen\Application::class)
+            && $this->app instanceof \Laravel\Lumen\Application
+        ) {
             $this->app->configure('pdauth');
         }
 

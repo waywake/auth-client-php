@@ -4,7 +4,6 @@ namespace PdAuth\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
-use Illuminate\Support\Str;
 
 class Authenticate
 {

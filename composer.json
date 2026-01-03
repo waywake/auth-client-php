@@ -12,13 +12,15 @@
         }
     },
     "require": {
-        "illuminate/support": "^5.5",
-        "paidian/json-rpc": "~1.1"
+        "php": "^8.3",
+        "illuminate/http": "^11.0",
+        "illuminate/support": "^11.0",
+        "paidian/json-rpc": "^2.0"
     },
     "repositories": {
         "php-json-rpc": {
-            "type": "vcs",
-            "url": "git@git.int.haowumc.com:composer/php-json-rpc.git"
+            "type": "git",
+            "url": "git@github.com:waywake/json-rpc-php.git"
         }
     }
 }
