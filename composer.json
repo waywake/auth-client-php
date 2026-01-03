@@ -1,9 +1,9 @@
 {
-    "name": "paidian/auth-client",
+    "name": "waywake/auth-client",
     "authors": [
         {
-            "name": "候学杰",
-            "email": "houxuejie@hawumc.com"
+            "name": "i5shuyi",
+            "email": "i5shuyi@amast.fun"
         }
     ],
     "autoload": {
@@ -13,14 +13,8 @@
     },
     "require": {
         "php": "^8.3",
-        "illuminate/http": "^11.0",
-        "illuminate/support": "^11.0",
-        "paidian/json-rpc": "^2.0"
-    },
-    "repositories": {
-        "php-json-rpc": {
-            "type": "git",
-            "url": "git@github.com:waywake/json-rpc-php.git"
-        }
+        "illuminate/http": "^12.0",
+        "illuminate/support": "^12.0",
+        "waywake/json-rpc": "^2.0"
     }
 }
