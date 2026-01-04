@@ -2,7 +2,6 @@
 
 namespace PdAuth;
 
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use PdAuth\Middleware\Authenticate;
@@ -79,7 +78,7 @@ class PdAuthServiceProvider extends ServiceProvider
             $id = $request->input('app_id');
             $token = app('pd.auth')->choose(null, $id)->getAccessToken($code);
             $cookie = new Cookie(Authenticate::CookieName, $token['access_token'], strtotime($token['expired_at']));
-            return RedirectResponse::create('/')->withCookie($cookie);
+            return redirect('/')->withCookie($cookie);
         });
 
         $this->app['router']->get('api/auth/logout', function (Request $request) {
