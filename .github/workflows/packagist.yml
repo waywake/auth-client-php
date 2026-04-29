@@ -32,7 +32,8 @@ jobs:
     steps:
       - name: Trigger Packagist update
         run: |
-          curl -X POST \
+          curl --fail-with-body --show-error --silent \
+            -X POST \
             -H 'content-type: application/json' \
             "https://packagist.org/api/update-package?username=${{ secrets.PACKAGIST_USERNAME }}&apiToken=${{ secrets.PACKAGIST_API_TOKEN }}" \
             -d '{"repository":{"url":"https://github.com/waywake/auth-client-php"}}'
