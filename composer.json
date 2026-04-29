@@ -1,5 +1,6 @@
 {
   "name": "waywake/auth-client",
+  "description": "Auth client for WayWake services",
   "license": "MIT",
   "authors": [
     {
