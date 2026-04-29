@@ -1,23 +1,36 @@
 {
-    "name": "waywake/auth-client",
-    "authors": [
-        {
-            "name": "i5shuyi",
-            "email": "i5shuyi@amast.fun"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "PdAuth\\": "src/"
-        }
-    },
-    "require": {
-        "php": "^8.3",
-        "illuminate/http": "^12.0",
-        "illuminate/support": "^12.0",
-        "waywake/json-rpc": "^2.0"
-    },
-    "require-dev": {
-        "laravel/framework": "^12.0"
+  "name": "waywake/auth-client",
+  "authors": [
+    {
+      "name": "i5shuyi",
+      "email": "x@amast.fun"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "PdAuth\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    },
+    "files": [
+      "tests/Support/Fakes.php"
+    ]
+  },
+  "require": {
+    "php": "^8.4",
+    "illuminate/http": "^12.0",
+    "illuminate/support": "^12.0",
+    "waywake/json-rpc": "^2.1"
+  },
+  "require-dev": {
+    "laravel/framework": "^12.0",
+    "phpunit/phpunit": "^11.5"
+  },
+  "scripts": {
+    "test": "phpunit",
+    "test:coverage": "php -d pcov.enabled=1 -d pcov.directory=src vendor/bin/phpunit --coverage-text"
+  }
 }

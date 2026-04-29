@@ -42,17 +42,19 @@ class Auth
         }
 
         //为了公司内部调用的统一，更换协议为 JSON RPC
-        if (function_exists('app')) {
+        if (function_exists('app') && app()->bound('rpc.auth')) {
             $this->rpc = app('rpc.auth');
         } else {
             $this->rpc = new Client([
+                'app' => env('APP_NAME', 'auth-client'),
                 'client' => [
                     'auth' => [
                         'local' => true,
-                        'base_uri' => env('RPC_AUTH_URI'),
+                        'base_uri' => env('RPC_AUTH_URI', $this->host),
                     ],
                 ],
             ]);
+            $this->rpc->endpoint('auth');
         }
     }
 

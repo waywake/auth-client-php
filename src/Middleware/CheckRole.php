@@ -35,13 +35,17 @@ class CheckRole
             $action = '__invoke';
         }
 
-        if (!class_exists($controller)
-            || (!defined($controller . '::Privileges') && !property_exists($controller, 'Privileges'))
-        ) {
+        if (!class_exists($controller)) {
             abort(403, '未定义权限');
         }
 
-        $roles = $controller::Privileges;
+        if (defined($controller . '::Privileges')) {
+            $roles = constant($controller . '::Privileges');
+        } elseif (property_exists($controller, 'Privileges')) {
+            $roles = $controller::$Privileges;
+        } else {
+            abort(403, '未定义权限');
+        }
 
         if (empty($roles) || empty($roles[$action])) {
             abort(403, '未定义权限');
