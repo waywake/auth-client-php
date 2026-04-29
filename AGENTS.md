@@ -55,6 +55,7 @@ php -d pcov.enabled=1 -d pcov.directory=src vendor/bin/phpunit --coverage-text
 - 不要让 PHPUnit 执行 `tests/1.php`。
 - 只在需要同步依赖时修改 `composer.lock`，避免无关依赖漂移。
 - 工作区可能已有用户改动，编辑前先看 `git status --short`，不要回滚非本次任务的改动。
+- 提交代码时 commit message 必须遵循 Conventional Commits，例如 `docs: update project documentation`、`fix: handle expired token`、`feat: add user group support`。
 
 ## 文档维护
 
