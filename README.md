@@ -1,6 +1,6 @@
 # Waywake Auth Client
 
-`waywake/auth-client` 是公司内部 Auth 系统的 PHP 客户端包，面向 Laravel/Lumen 12 应用。它通过 `waywake/json-rpc` 调用 Auth 服务，提供：
+`waywake/auth-client` 是公司内部 Auth 系统的 PHP 客户端包，面向 Laravel/Lumen 12 和 13 应用。它通过 `waywake/json-rpc` 调用 Auth 服务，提供：
 
 - OAuth code 换 access token
 - 根据 token 获取当前用户信息
@@ -11,8 +11,8 @@
 ## 环境要求
 
 - PHP `^8.4`
-- Laravel/Lumen 12 相关组件
-- `waywake/json-rpc ^2.1`
+- Laravel/Lumen 12 或 13 相关组件
+- `waywake/json-rpc ^2.2`
 
 开发测试使用 PHPUnit 11，覆盖率使用 PCOV。
 

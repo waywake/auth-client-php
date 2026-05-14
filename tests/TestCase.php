@@ -104,6 +104,11 @@ class SimpleResponseFactory implements ResponseFactoryContract
         return $this->json($data, $status, $headers, $options)->setCallback($callback);
     }
 
+    public function eventStream($callback, array $headers = [], $endStreamWith = '</stream>')
+    {
+        throw new BadMethodCallException('Event streams are not supported by the test response factory.');
+    }
+
     public function stream($callback, $status = 200, array $headers = [])
     {
         throw new BadMethodCallException('Streams are not supported by the test response factory.');

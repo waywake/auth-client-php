@@ -4,7 +4,7 @@
 
 ## 项目概览
 
-这是 `waywake/auth-client`，一个 Laravel/Lumen 12 的 Auth 客户端包。
+这是 `waywake/auth-client`，一个 Laravel/Lumen 12 和 13 的 Auth 客户端包。
 
 核心代码：
 
@@ -41,8 +41,8 @@ php -d pcov.enabled=1 -d pcov.directory=src vendor/bin/phpunit --coverage-text
 ## 兼容性注意
 
 - 当前包要求 PHP `^8.4`。
-- 当前 JSON-RPC 依赖是 `waywake/json-rpc ^2.1`。
-- `JsonRpc\Client` 2.1 需要配置 `app`，并且要通过 `endpoint('auth')` 初始化 endpoint 后再调用 `call()`。
+- 当前 JSON-RPC 依赖是 `waywake/json-rpc ^2.2`。
+- `JsonRpc\Client` 2.2 需要配置 `app`，并且要通过 `endpoint('auth')` 初始化 endpoint 后再调用 `call()`。
 - `Auth` 会优先使用容器中的 `app('rpc.auth')`。只有未绑定 `rpc.auth` 时才创建 fallback `JsonRpc\Client`。
 - `APP_ENV` 只接受 `local`、`develop`、`production`，其他值会抛异常。
 - `CheckRole` 支持控制器 `Privileges` 常量和静态属性，新增权限相关行为时两种形式都要考虑。
