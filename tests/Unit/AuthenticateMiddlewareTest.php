@@ -12,13 +12,13 @@ use Tests\TestCase;
 
 class AuthenticateMiddlewareTest extends TestCase
 {
-    public function testJsonGuestResponseContainsLoginUrlFromRedirectInput(): void
+    public function testAjaxGuestResponseContainsLoginUrlFromRedirectInput(): void
     {
         $middleware = new Authenticate(new AuthFactoryFake(true));
         $this->app['config']->set('pdauth.code.unauthorized', 400499);
         $this->app->instance('pd.auth', new PdAuthFake());
         $request = Request::create('/private', 'GET', ['redirect' => 'https://front.test/callback'], [], [], [
-            'HTTP_ACCEPT' => 'application/json',
+            'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
         ]);
 
         $response = $middleware->handle($request, fn () => 'next', 'erp');
@@ -34,12 +34,12 @@ class AuthenticateMiddlewareTest extends TestCase
         ], $response->getData(true));
     }
 
-    public function testJsonGuestResponseFallsBackToRefererHeader(): void
+    public function testAjaxGuestResponseFallsBackToRefererHeader(): void
     {
         $middleware = new Authenticate(new AuthFactoryFake(true));
         $this->app->instance('pd.auth', new PdAuthFake());
         $request = Request::create('/private', 'GET', [], [], [], [
-            'HTTP_ACCEPT' => 'application/json',
+            'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
             'HTTP_REFERER' => 'https://front.test/current',
         ]);
 
