@@ -48,6 +48,22 @@ class AuthenticateMiddlewareTest extends TestCase
         $this->assertSame('connect:https://front.test/current', $response->getData(true)['data']['url']);
     }
 
+    public function testJsonContentTypeGuestResponseReturnsUnauthorized(): void
+    {
+        $middleware = new Authenticate(new AuthFactoryFake(true));
+        $this->app->instance('pd.auth', new PdAuthFake());
+        $request = Request::create('/private', 'GET', [], [], [], [
+            'CONTENT_TYPE' => 'application/json',
+            'HTTP_REFERER' => 'https://front.test/current',
+        ]);
+
+        $response = $middleware->handle($request, fn () => 'next');
+
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertSame(401, $response->getStatusCode());
+        $this->assertSame('connect:https://front.test/current', $response->getData(true)['data']['url']);
+    }
+
     public function testHtmlGuestResponseRedirectsToDefaultTokenCallback(): void
     {
         $middleware = new Authenticate(new AuthFactoryFake(true));

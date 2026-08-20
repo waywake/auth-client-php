@@ -41,7 +41,7 @@ class Authenticate
         //登录状态检测
         if ($this->auth->guard($guard)->guest()) {
             $redirect = $request->input('redirect');
-            if ($request->ajax()) {
+            if ($request->ajax() || $request->isJson()) {
                 if( $redirect == null ){
                     $redirect = $request->header('referer');
                 }
